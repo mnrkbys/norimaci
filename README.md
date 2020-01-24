@@ -55,7 +55,7 @@ Because, OpenBSM records audit logs about only login and authentication by defau
 
 The computer has to be rebooted after the modification to apply the setting.
 
-```/etc/security/audit_control
+```
 #
 # $P4: //depot/projects/trustedbsd/openbsm/etc/audit_control#8 $
 #
@@ -115,7 +115,7 @@ Note: Monitor.app can not run on macOS 10.15. But, it works fine on macOS 10.14 
 
 - norimaci.py
 
-```norimaci.py
+```bash
 $ python3 ./norimaci.py -h
 
 --===[ Norimaci v0.1.0
@@ -148,7 +148,7 @@ optional arguments:
 
 - openbsmconv.py
 
-```openbsmconv.py
+```bash
 $ python3 ./openbsmconv.py -h
 usage: openbsmconv.py [-h] [-f FILE] [-p PROCLIST] [-o OUT] [-c] [-rp]
                       [--with-failure] [--with-failure-socket] [--force]
@@ -178,7 +178,7 @@ optional arguments:
 
 - monitorappconv.py
 
-```monitorappconv.py
+```bash
 $ python3 ./monitorappconv.py -h
 usage: monitorappconv.py [-h] [-f FILE] [-o OUT] [-c] [--force] [--debug]
 
