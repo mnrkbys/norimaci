@@ -1,0 +1,8 @@
+._*
+.DS_Store
+.history/
+.vscode/
+data/
+failed_data/
+noriben_sample/
+old/
