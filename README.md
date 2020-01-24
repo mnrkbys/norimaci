@@ -1,6 +1,6 @@
 # Norimaci
 
-"Norimaci" is a simple and lightweight malware analysis sandbox for macOS. This tool was inspired "[Noriben](https://github.com/Rurik/Noriben)". Norimaci uses the features of OpenBSM or Monitor.app to monitor macOS system activity instead of Sysinternals Process Monitor (procmon).
+"Norimaci" is a simple and lightweight malware analysis sandbox for macOS. This tool was inspired by "[Noriben](https://github.com/Rurik/Noriben)". Norimaci uses the features of OpenBSM or Monitor.app to monitor macOS system activity instead of Sysinternals Process Monitor (procmon).
 
 Norimaci consists of 3 Python scripts.
 
@@ -32,13 +32,13 @@ So, I decided to name this tool "Norimaci".
 
 - [Monitor.app](https://www.fireeye.com/services/freeware/monitor.html)
 
-You have to install libraries below from their source repositories or pip, if you use Norimaci with Monitor.app:
+**Note that, Monitor.app supports only macOS 10.12 - 10.14. You don't have to install it, if you want to execute malware on macOS 10.15 or later. You have to use OpenBSM instead of it.**
+
+You have to install libraries below from their source repositories or pip, if you use Norimaci with Monitor.app.
 
 - [py-applescript](https://github.com/rdhyee/py-applescript)
 - [PyObjC](https://bitbucket.org/ronaldoussoren/pyobjc)
 - [dnslib](https://bitbucket.org/paulc/dnslib/)
-
-**Note that, Monitor.app supports only macOS 10.12 - 10.14. You don't have to install it, if you want to execute malware on macOS 10.15 or later. You have to use OpenBSM instead of it.**
 
 ## Preparing
 
