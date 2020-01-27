@@ -182,11 +182,17 @@ def get_proc_info(pid, element):
 
 def convert_user_to_id(username):
     # https://stackoverflow.com/questions/421618/python-script-to-list-users-and-groups
-    return int(pwd.getpwnam(username)[2])
+    try:
+        return int(pwd.getpwnam(username)[2])
+    except KeyError:
+        sys.exit('Error: unknown username: {}'.format(username))
 
 
 def convert_group_to_id(groupname):
-    return int(grp.getgrnam(groupname)[2])
+    try:
+        return int(grp.getgrnam(groupname)[2])
+    except KeyError:
+        sys.exit('Error: unknown groupname: {}'.format(groupname))
 
 
 def get_event_name(record):
@@ -212,6 +218,36 @@ def get_record_timestamp(payload):
     _time = int(datetime.datetime.strptime(time, '%a %b %d %H:%M:%S %Y').timestamp())
     _msec = int(msec.split()[1])
     return _time, _msec, _payload
+
+
+def get_attributes_path(payload, attr_num):
+    check_attr = 0
+    payload_backup = ''
+    _payload = payload
+    _path, _payload = _payload.split(',', 1)
+    path = _path
+    while len(_payload) > 0:
+        _tag, _payload = _payload.split(',', 1)
+        if _tag == 'path':
+            _path, _payload = get_attributes_path(_payload, attr_num)
+            check_attr += 1
+            if payload_backup:
+                payload_backup += ',' + _tag + ',' + _path
+            else:
+                payload_backup = _tag + ',' + _path
+        elif _tag in attr_num.keys():
+            if payload_backup:
+                payload_backup += ',' + _tag + ',' + ','.join(_payload.split(',', attr_num[_tag])[:attr_num[_tag]])
+            else:
+                payload_backup = _tag + ',' + ','.join(_payload.split(',', attr_num[_tag])[:attr_num[_tag]])
+            _payload = _payload.split(',', attr_num[_tag])[attr_num[_tag]]
+            check_attr += 1
+        else:
+            path += ',' + _tag
+
+        if check_attr == 2:
+            break
+    return path, payload_backup + ',' + _payload
 
 
 def get_attributes(tags, payload):
@@ -243,7 +279,9 @@ def get_attributes(tags, payload):
                 tag_attr[tag] = list()
 
             if tag == 'path':
-                tag_attr[tag].append(attrib_list[0])
+                path, payload = get_attributes_path(payload, attr_num)
+                tag_attr[tag].append(path)
+                continue
             elif tag == 'argument':
                 tag_attr[tag].append(attrib_list)
             else:
@@ -255,7 +293,18 @@ def get_attributes(tags, payload):
             while True:
                 _tag, payload = payload.split(',', 1)
                 if _tag == 'path':
-                    check = payload.split(',', 4)
+                    check = list()
+                    path, __payload = get_attributes_path(payload, attr_num)
+                    check.append(path)
+                    for i in list(range(3)):
+                        __tag, __payload = __payload.split(',', 1)
+                        if __tag == 'path':
+                            path, __payload = get_attributes_path(__payload, attr_num)
+                            check.append(__tag)
+                            check.append(path)
+                        else:
+                            check.append(__tag)
+
                     if (check[0].startswith('/') and check[1] == 'path' and check[2].startswith('/') and check[3] == 'attribute') or \
                             (check[0].startswith('/') and check[1] == 'arbitrary' and check[2] == 'hex' and check[3] == 'byte') or \
                             (check[0].startswith('/') and check[1] == 'subject'):
