@@ -305,9 +305,9 @@ def get_attributes(tags, payload):
                         else:
                             check.append(__tag)
 
-                    if (check[0].startswith('/') and check[1] == 'path' and check[2].startswith('/') and check[3] == 'attribute') or \
-                            (check[0].startswith('/') and check[1] == 'arbitrary' and check[2] == 'hex' and check[3] == 'byte') or \
-                            (check[0].startswith('/') and check[1] == 'subject'):
+                    if (check[0].startswith(('/', './')) and check[1] == 'path' and check[2].startswith(('/', './')) and check[3] == 'attribute') or \
+                            (check[0].startswith(('/', './')) and check[1] == 'arbitrary' and check[2] == 'hex' and check[3] == 'byte') or \
+                            (check[0].startswith(('/', './')) and check[1] == 'subject'):
                         payload = _tag + ',' + payload
                         break
                 else:
