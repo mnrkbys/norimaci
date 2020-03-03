@@ -196,9 +196,9 @@ optional arguments:
 
 ## Demo
 
-Analyze AppleJeus.A on macOS 10.15 Catalina with Norimaci.
+Analyze AppleJeus.A on macOS 10.15 Catalina with Norimaci. This demo movie was made for Japan Security Analyst Conference 2020 (JSAC2020)
+
 ![Norimaci demo](images/JSAC2020_demo2.gif)
-Demo movie for Japan Security Analyst Conference 2020 (JSAC2020)
 
 ## Installation
 
